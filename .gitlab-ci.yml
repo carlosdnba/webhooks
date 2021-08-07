@@ -1,0 +1,42 @@
+image: node:14
+stages:
+  - deploy
+
+before_script:
+  - apt-get update
+  - apt-get install -y build-essential
+  - yarn -D
+
+deploy_develop:
+  stage: deploy
+  variables:
+    ENVIRONMENT_NAME: develop
+  only:
+    - develop
+  before_script:
+    - yarn config set prefix /usr/local
+    - yarn global add serverless
+    - yarn
+    - export PROJECT_NAME
+    - export AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY
+    - sls config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY
+  script:
+    - sls deploy
+
+deploy_master:
+  stage: deploy
+  variables:
+    ENVIRONMENT_NAME: master
+  only:
+    - master
+  before_script:
+    - yarn config set prefix /usr/local
+    - yarn global add serverless
+    - yarn
+    - export PROJECT_NAME
+    - export AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY
+    - sls config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY
+  script:
+    - sls deploy

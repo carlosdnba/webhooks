@@ -1,0 +1,27 @@
+{
+  "name": "bible-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "sls deploy",
+    "dev": "sls offline",
+    "lint": "./node_modules/.bin/eslint"
+  },
+  "author": "Carlos Daniel",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "dynamoose": "^2.7.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "serverless-bundle": "3.2.0",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^7.0.0"
+  }
+}
