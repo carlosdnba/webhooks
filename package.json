@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently yarn:startup-*",
+    "startup-server": "sls offline",
+    "startup-dynalite": "./node_modules/.bin/dynalite --createTableMs=0 --deleteTableMs=0 --updateTableMs=0 --port=8000",
+    "startup-dynamodb-admin": "dynamodb-admin",
     "deploy": "sls deploy",
-    "dev": "sls offline",
     "lint": "./node_modules/.bin/eslint"
   },
   "author": "Carlos Daniel",
@@ -16,12 +19,15 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "concurrently": "^6.2.0",
+    "dynalite": "^3.2.1",
+    "dynamodb-admin": "^4.0.3",
     "eslint": "^7.17.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "serverless-bundle": "3.2.0",
     "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^7.0.0"
+    "serverless-offline": "^8.0.0"
   }
 }
