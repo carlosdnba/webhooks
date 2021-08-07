@@ -1,0 +1,8 @@
+export const gitlab = async event => {
+  const payload = JSON.parse(event.body);
+  console.log(payload);
+
+  return {
+    statusCode: 200,
+  };
+};

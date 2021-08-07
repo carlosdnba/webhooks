@@ -22,9 +22,21 @@ plugins:
   - serverless-dotenv-plugin
 
 functions:
-  healthCheck:
+  health-check:
     handler: src/handlers/index.healthCheck
     events:
       - http:
           path: health-check
           method: get
+  gitlab:
+    handler: src/handlers/index.gitlab
+    events:
+      - http:
+          path: webhook/gitlab
+          method: post
+  github:
+    handler: src/handlers/index.github
+    events:
+      - http:
+          path: webhook/github
+          method: post
