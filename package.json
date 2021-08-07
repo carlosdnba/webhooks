@@ -1,8 +1,7 @@
 {
-  "name": "bible-backend",
+  "name": "webhooks",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "author": "Carlos Daniel",
   "scripts": {
     "start": "concurrently yarn:startup-*",
     "startup-server": "sls offline",
@@ -11,8 +10,6 @@
     "deploy": "sls deploy",
     "lint": "./node_modules/.bin/eslint"
   },
-  "author": "Carlos Daniel",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0",
     "dynamoose": "^2.7.3"
