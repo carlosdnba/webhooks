@@ -9,7 +9,6 @@ after_script:
 install_dependencies:
   stage: install_dependencies
   script:
-    - yarn config set prefix /usr/local
     - yarn global add serverless
     - yarn
     - export PROJECT_NAME
