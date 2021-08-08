@@ -23,6 +23,7 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
+    - ls -la 
     - yarn deploy:aws-config
     - yarn deploy:run
   cache:
