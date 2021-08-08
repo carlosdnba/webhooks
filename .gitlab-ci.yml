@@ -56,7 +56,7 @@ start:
     paths:
       - node_modules
   only:
-    - master
+    - develop
 
 deploy:
   stage: deploy
