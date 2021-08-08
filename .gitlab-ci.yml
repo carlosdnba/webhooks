@@ -38,6 +38,7 @@ deploy:
   variables:
     ENVIRONMENT_NAME: master
   script:
+    - ls -la 
     - yarn deploy:aws-config
     - yarn deploy:run
   cache:
