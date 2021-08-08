@@ -33,7 +33,7 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
-    - sls deploy
+    - yarn run sls deploy
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
