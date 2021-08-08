@@ -9,7 +9,6 @@ after_script:
 install_dependencies:
   stage: install_dependencies
   script:
-    - yarn global add serverless
     - yarn
     - export PROJECT_NAME
     - export AWS_ACCESS_KEY_ID
