@@ -3,7 +3,12 @@ stages:
   - install_dependencies
   - deploy
 
-before_script:
+after_script:
+  - echo ${CI_JOB_STAGE}:${CI_JOB_NAME} > LAST_JOB
+
+build_essential:
+  stage: install_dependencies
+  script:
   - apt-get update
   - apt-get install -y build-essential
   - yarn -D
@@ -18,6 +23,10 @@ install_dependencies:
     - export AWS_ACCESS_KEY_ID
     - export AWS_SECRET_ACCESS_KEY
     - sls config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - node_modules
 
 start:
   stage: deploy
@@ -25,9 +34,13 @@ start:
     ENVIRONMENT_NAME: develop
   script:
     - sls deploy
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    policy: pull
+    paths:
+      - node_modules
   except:
     - master
-
 
 deploy:
   stage: deploy
@@ -35,5 +48,10 @@ deploy:
     ENVIRONMENT_NAME: master
   script:
     - sls deploy
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    policy: pull
+    paths:
+      - node_modules
   only:
     - master
