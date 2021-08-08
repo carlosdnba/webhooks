@@ -2,6 +2,7 @@
   "name": "webhooks",
   "version": "1.0.0",
   "author": "Carlos Daniel",
+  "license": "MIT",
   "scripts": {
     "start": "concurrently yarn:startup:*",
     "startup:server": "sls offline",
