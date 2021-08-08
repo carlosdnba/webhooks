@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     commonjs: true,
+    'jest/globals': true,
     node: true,
   },
   extends: [
@@ -9,6 +10,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
+  plugins: [
+    'jest',
+  ],
   rules: {
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
@@ -22,6 +26,8 @@ module.exports = {
     'no-empty': 'off',
     'arrow-parens': 'off',
     'import/prefer-default-export': 'off',
+    'import/named': 'off',
+    'no-underscore-dangle': 'off',
     camelcase: 'off',
     'object-curly-newline': [
       'error',
@@ -30,5 +36,4 @@ module.exports = {
       },
     ],
   },
-
 };

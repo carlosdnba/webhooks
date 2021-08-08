@@ -8,5 +8,5 @@ export const sendDiscordEmbedMessage = async ({ embeds }) => {
   await discordHttp.post(
     `webhooks/${process.env.DISCORD_WEBHOOK}`,
     { embeds },
-  ).catch(err => console.error(err));
+  );
 };

@@ -1,6 +1,7 @@
 image: registry.gitlab.com/dev_squad/ci-base-image:latest
 stages:
   - install_dependencies
+  - test
   - deploy
 
 after_script:
@@ -17,6 +18,28 @@ install_dependencies:
     key: $CI_COMMIT_REF_SLUG
     paths:
       - node_modules
+  rules:
+    - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+unit:
+  stage: test
+  script:
+    - yarn test:ci
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    policy: pull
+    paths:
+      - node_modules
+  rules:
+    - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 start:
   stage: deploy
@@ -32,7 +55,7 @@ start:
     policy: pull
     paths:
       - node_modules
-  except:
+  only:
     - master
 
 deploy:
