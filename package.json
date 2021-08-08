@@ -13,7 +13,7 @@
     "test:coverage": "./node_modules/.bin/jest --coverage",
     "test:ci": "./node_modules/.bin/jest --ci --reporters=default --reporters=jest-junit --coverage --bail",
     "test:watch": "./node_modules/.bin/jest --watch",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint --fix"
   },
   "dependencies": {
     "axios": "^0.20.0",
@@ -34,6 +34,7 @@
     "eslint": "^7.17.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^27.0.6",
     "serverless-bundle": "3.2.0",
