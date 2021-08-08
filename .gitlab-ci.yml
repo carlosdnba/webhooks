@@ -32,7 +32,7 @@ start:
     policy: pull
     paths:
       - node_modules
-  except:
+  only:
     - master
 
 deploy:
