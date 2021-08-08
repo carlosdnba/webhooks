@@ -33,7 +33,7 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
-    - yarn run sls deploy
+    - yarn deploy
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
@@ -47,7 +47,7 @@ deploy:
   variables:
     ENVIRONMENT_NAME: master
   script:
-    - sls deploy
+    - yarn deploy
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull

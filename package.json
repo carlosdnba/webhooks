@@ -7,7 +7,7 @@
     "startup-server": "sls offline",
     "startup-dynalite": "./node_modules/.bin/dynalite --createTableMs=0 --deleteTableMs=0 --updateTableMs=0 --port=8000",
     "startup-dynamodb-admin": "dynamodb-admin",
-    "deploy": "sls deploy",
+    "deploy": "serverless  deploy",
     "lint": "./node_modules/.bin/eslint"
   },
   "dependencies": {
