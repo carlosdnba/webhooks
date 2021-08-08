@@ -37,7 +37,7 @@ export const handleGitlabPush = async payload => {
     content += `\n\n[${commit.id.substring(0, 8)}](${commit.url}): ${commit.title}`;
 
     if (commit.added.length > 0) {
-      content += '\n**Added files:** ';
+      content += '\n__Added files:__ ';
       commit.added.forEach((file, i) => {
         if (i === 0) content += `\`${file}\``;
         else content += ` | \`${file}\``;
@@ -45,7 +45,7 @@ export const handleGitlabPush = async payload => {
     }
 
     if (commit.modified.length > 0) {
-      content += '\n**Modified files:** ';
+      content += '\n__Modified files:__ ';
       commit.modified.forEach((file, i) => {
         if (i === 0) content += `\`${file}\``;
         else content += ` | \`${file}\``;
@@ -53,7 +53,7 @@ export const handleGitlabPush = async payload => {
     }
 
     if (commit.removed.length > 0) {
-      content += '\n**Removed files:** ';
+      content += '\n__Removed files:__ ';
       commit.removed.forEach((file, i) => {
         if (i === 0) content += `\`${file}\``;
         else content += ` | \`${file}\``;
