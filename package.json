@@ -17,7 +17,12 @@
     "serverless": "^2.53.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.0.6",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-rewire": "^1.2.0",
+    "babel-preset-latest-node": "^5.5.1",
     "concurrently": "^6.2.0",
     "dynalite": "^3.2.1",
     "dynamodb-admin": "^4.0.3",
@@ -25,6 +30,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^27.0.6",
     "serverless-bundle": "3.2.0",
     "serverless-dotenv-plugin": "^2.1.1",
     "serverless-offline": "^8.0.0"
