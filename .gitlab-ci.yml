@@ -1,4 +1,4 @@
-image: node:14
+image: registry.gitlab.com/dev_squad/ci-base-image:latest
 stages:
   - install_dependencies
   - deploy
