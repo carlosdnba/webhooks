@@ -30,6 +30,11 @@ start:
     policy: pull
     paths:
       - node_modules
+  artifacts:
+    when: always
+    paths:
+      - LAST_JOB
+      - .serverless
   except:
     - master
 
@@ -46,5 +51,10 @@ deploy:
     policy: pull
     paths:
       - node_modules
+  artifacts:
+    when: always
+    paths:
+      - LAST_JOB
+      - .serverless
   only:
     - master
