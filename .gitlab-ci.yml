@@ -23,7 +23,7 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
-    - yarn deploy:config
+    - yarn deploy:aws-config
     - yarn deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
@@ -38,7 +38,7 @@ deploy:
   variables:
     ENVIRONMENT_NAME: master
   script:
-    - yarn deploy:config
+    - yarn deploy:aws-config
     - yarn deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
