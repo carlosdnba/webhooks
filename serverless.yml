@@ -21,7 +21,6 @@ provider:
   environment:
     PROJECT_NAME: ${env:PROJECT_NAME}
     ENVIRONMENT_NAME: ${self:provider.stage}
-    DISCORD_WEBHOOK: ${env:DISCORD_WEBHOOK}
 
 custom:
   serverless-offline:
