@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     commonjs: true,
+    'jest/globals': true,
     node: true,
   },
   extends: [
@@ -30,5 +31,4 @@ module.exports = {
       },
     ],
   },
-
 };
