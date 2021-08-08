@@ -13,7 +13,6 @@ install_dependencies:
     - export PROJECT_NAME
     - export AWS_ACCESS_KEY_ID
     - export AWS_SECRET_ACCESS_KEY
-    - sls config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
@@ -24,7 +23,8 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
-    - yarn deploy
+    - yarn deploy:config
+    - yarn deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
@@ -38,7 +38,8 @@ deploy:
   variables:
     ENVIRONMENT_NAME: master
   script:
-    - yarn deploy
+    - yarn deploy:config
+    - yarn deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
