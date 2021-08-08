@@ -9,6 +9,10 @@
     "startup:dynamodb-admin": "dynamodb-admin",
     "deploy:run": "./node_modules/.bin/serverless deploy",
     "deploy:aws-config": "./node_modules/.bin/serverless config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY",
+    "test": "./node_modules/.bin/jest --detectOpenHandles --forceExit --logHeapUsage",
+    "test:coverage": "./node_modules/.bin/jest --coverage",
+    "test:ci": "./node_modules/.bin/jest --ci --reporters=default --reporters=jest-junit --coverage --bail",
+    "test:watch": "./node_modules/.bin/jest --watch",
     "lint": "./node_modules/.bin/eslint"
   },
   "dependencies": {
