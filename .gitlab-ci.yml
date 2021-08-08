@@ -5,14 +5,7 @@ stages:
 
 after_script:
   - echo ${CI_JOB_STAGE}:${CI_JOB_NAME} > LAST_JOB
-
-build_essential:
-  stage: install_dependencies
-  script:
-  - apt-get update
-  - apt-get install -y build-essential
-  - yarn -D
-
+  
 install_dependencies:
   stage: install_dependencies
   script:
