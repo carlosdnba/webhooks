@@ -60,7 +60,7 @@ export const handleGitlabPush = async payload => {
       });
     }
 
-    // await GitlabCommit.create(commit);
+    await GitlabCommit.create(commit);
   }
 
   await sendDiscordEmbedMessage({
