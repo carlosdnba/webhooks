@@ -1,12 +1,16 @@
+import debug from 'debug';
 import { GitlabBuild } from '../models/gitlab/build';
 import { GitlabCommit } from '../models/gitlab/commit';
 import { GitlabPipeline } from '../models/gitlab/pipeline';
 import { sendDiscordEmbedMessage } from '../services/discord';
 import { buildTransformer, pipelineTransformer } from '../utils/transformer';
 
+const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`);
+
 export const gitlab = async event => {
   const payload = JSON.parse(event.body);
   const { object_kind } = payload;
+  logger('payload %O', payload);
 
   if (object_kind === 'push') handleGitlabPush(payload);
   else if (object_kind === 'build') await handleGitlabBuild(payload);
@@ -60,10 +64,11 @@ export const handleGitlabPush = async payload => {
       });
     }
 
-    await GitlabCommit.create(commit);
+    const response = await GitlabCommit.create(commit);
+    logger('response %O', response);
   }
 
-  await sendDiscordEmbedMessage({
+  const { data } = await sendDiscordEmbedMessage({
     embeds: [{
       color: 0xE67E22,
       author: {
@@ -78,6 +83,7 @@ export const handleGitlabPush = async payload => {
       },
     }],
   });
+  logger('data %O', data);
 };
 
 export const handleGitlabBuild = payload => GitlabBuild.create(buildTransformer(payload));
