@@ -10,7 +10,7 @@ const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`);
 export const gitlab = async event => {
   const payload = JSON.parse(event.body);
   const { object_kind } = payload;
-  logger('payload %O', payload);
+  logger('payload %O, kind', payload, object_kind);
 
   if (object_kind === 'push') handleGitlabPush(payload);
   else if (object_kind === 'build') await handleGitlabBuild(payload);
