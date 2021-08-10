@@ -2,6 +2,7 @@ import debug from 'debug';
 import { GitlabBuild } from '../models/gitlab/build';
 import { GitlabCommit } from '../models/gitlab/commit';
 import { GitlabPipeline } from '../models/gitlab/pipeline';
+import { GitlabMergeRequest } from '../models/gitlab/merge-request';
 import { sendDiscordEmbedMessage } from '../services/discord';
 import { buildTransformer } from '../utils/transformer';
 
@@ -14,6 +15,7 @@ export const gitlab = async event => {
 
   if (object_kind === 'push') handleGitlabPush(payload);
   else if (object_kind === 'pipeline') await handleGitlabPipeline(payload);
+  else if (object_kind === 'merge_request') await handleGitlabMergeRequest(payload);
 
   return {
     statusCode: 200,
@@ -183,4 +185,22 @@ export const handleGitlabPipeline = async payload => {
     });
     logger('pipelineCreateResponse %O', pipelineCreateResponse);
   }
+};
+
+export const handleGitlabMergeRequest = async payload => {
+  const {
+    object_attributes: mergeRequest,
+    project,
+    user,
+    labels,
+    changes,
+  } = payload;
+
+  const response = await GitlabMergeRequest.create({
+    ...mergeRequest,
+    user,
+    project,
+    labels,
+    changes,
+  });
 };
