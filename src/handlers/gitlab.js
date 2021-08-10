@@ -3,7 +3,7 @@ import { GitlabBuild } from '../models/gitlab/build';
 import { GitlabCommit } from '../models/gitlab/commit';
 import { GitlabPipeline } from '../models/gitlab/pipeline';
 import { sendDiscordEmbedMessage } from '../services/discord';
-import { buildTransformer, pipelineTransformer } from '../utils/transformer';
+import { buildTransformer } from '../utils/transformer';
 
 const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`);
 
@@ -13,7 +13,6 @@ export const gitlab = async event => {
   logger('payload %O, kind', payload, object_kind);
 
   if (object_kind === 'push') handleGitlabPush(payload);
-  else if (object_kind === 'build') await handleGitlabBuild(payload);
   else if (object_kind === 'pipeline') await handleGitlabPipeline(payload);
 
   return {
@@ -94,6 +93,96 @@ export const handleGitlabPush = async payload => {
   logger('data %O', data);
 };
 
-export const handleGitlabBuild = payload => GitlabBuild.create(buildTransformer(payload));
+export const handleGitlabPipeline = async payload => {
+  const {
+    object_attributes: pipeline,
+    user,
+    project,
+    commit,
+    merge_request,
+  } = payload;
 
-export const handleGitlabPipeline = payload => GitlabPipeline.create(pipelineTransformer(payload));
+  const pipelineExists = await GitlabPipeline.get(pipeline.id);
+
+  if (pipelineExists) {
+    if (pipeline.status === 'success') {
+      const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has passed in ${new Date(pipeline.duration * 1000).toISOString().substr(14, 5)}`;
+
+      const { data } = await sendDiscordEmbedMessage({
+        embeds: [{
+          color: 0x1F8B4C,
+          author: {
+            name: user.user_name,
+            icon_url: user.user_avatar,
+            url: `https://gitlab.com/${user.user_username}`,
+          },
+          description: content,
+          timestamp: new Date(),
+          footer: {
+            text: 'GitLab',
+          },
+        }],
+      });
+      logger('data %O', data);
+    } else if (pipeline.status === 'failed') {
+      const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has failed in ${new Date(pipeline.duration * 1000).toISOString().substr(14, 5)}`;
+
+      const { data } = await sendDiscordEmbedMessage({
+        embeds: [{
+          color: 0xE74C3C,
+          author: {
+            name: user.user_name,
+            icon_url: user.user_avatar,
+            url: `https://gitlab.com/${user.user_username}`,
+          },
+          description: content,
+          timestamp: new Date(),
+          footer: {
+            text: 'GitLab',
+          },
+        }],
+      });
+      logger('data %O', data);
+    }
+
+    const pipelineUpdateResponse = await GitlabPipeline.update({
+      id: pipeline.id,
+      status: pipeline.status,
+      detailed_status: pipeline.detailed_status,
+      created_at: pipeline.created_at,
+      finished_at: pipeline.finished_at,
+      duration: pipeline.duration,
+    });
+    logger('pipelineUpdateResponse %O', pipelineUpdateResponse);
+  } else {
+    if (pipeline.status === 'running') {
+      const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) started running`;
+
+      const { data } = await sendDiscordEmbedMessage({
+        embeds: [{
+          color: 0xE67E22,
+          author: {
+            name: user.user_name,
+            icon_url: user.user_avatar,
+            url: `https://gitlab.com/${user.user_username}`,
+          },
+          description: content,
+          timestamp: new Date(),
+          footer: {
+            text: 'GitLab',
+          },
+        }],
+      });
+      logger('data %O', data);
+    }
+
+    const pipelineCreateResponse = await GitlabPipeline.create({
+      ...pipeline,
+      user,
+      project,
+      commit,
+      merge_request,
+    });
+    logger('pipelineCreateResponse %O', pipelineCreateResponse);
+  }
+};
