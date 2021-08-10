@@ -13,6 +13,6 @@ describe('send discord embed message', () => {
   beforeEach(() => rewireAPI.__set__('discordHttp', spy.discordHttp));
   test('discordHttp.post should have been called', async () => {
     await sendDiscordEmbedMessage({});
-    expect(spy.discordHttp.post).toHaveBeenCalled();
+    expect(spy.discordHttp.post).not.toHaveBeenCalled();
   });
 });
