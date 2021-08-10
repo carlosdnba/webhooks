@@ -107,7 +107,7 @@ export const handleGitlabPipeline = async payload => {
   const pipelineExists = await GitlabPipeline.get(pipeline.id);
 
   if (pipeline.status === 'running') {
-    const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) started running`;
+    const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has started running`;
 
     const { data } = await sendDiscordEmbedMessage({
       embeds: [{
