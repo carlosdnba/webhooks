@@ -21,6 +21,7 @@
     "debug": "^4.3.2",
     "dynamoose": "^2.7.3",
     "jest-junit": "^12.2.0",
+    "moment": "^2.29.1",
     "serverless": "^2.53.1"
   },
   "devDependencies": {
