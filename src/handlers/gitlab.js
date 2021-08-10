@@ -64,8 +64,16 @@ export const handleGitlabPush = async payload => {
       });
     }
 
-    const response = await GitlabCommit.create(commit);
-    logger('response %O', response);
+    const commitCreateResponse = await GitlabCommit.create({
+      ...commit,
+      project: {
+        id: project.id,
+        name: project.name,
+        description: project.description,
+        web_url: project.web_url,
+      },
+    });
+    logger('commitCreateResponse %O', commitCreateResponse);
   }
 
   const { data } = await sendDiscordEmbedMessage({
