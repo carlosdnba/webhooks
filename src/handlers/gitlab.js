@@ -5,6 +5,7 @@ import { GitlabPipeline } from '../models/gitlab/pipeline';
 import { GitlabMergeRequest } from '../models/gitlab/merge-request';
 import { sendDiscordEmbedMessage } from '../services/discord';
 import { buildTransformer } from '../utils/transformer';
+import { gitlabEmbed } from '../views/discord-embed';
 
 const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`);
 
@@ -77,20 +78,15 @@ export const handleGitlabPush = async payload => {
     logger('commitCreateResponse %O', commitCreateResponse);
   }
 
+  const message = gitlabEmbed({
+    color: 0xE67E22,
+    content,
+    user: { user_name, user_avatar, user_username },
+  });
+  logger('message', message);
+
   const { data } = await sendDiscordEmbedMessage({
-    embeds: [{
-      color: 0xE67E22,
-      author: {
-        name: user_name,
-        icon_url: user_avatar,
-        url: `https://gitlab.com/${user_username}`,
-      },
-      description: content,
-      timestamp: new Date(),
-      footer: {
-        text: 'GitLab',
-      },
-    }],
+    embeds: [message],
   });
   logger('data %O', data);
 };
@@ -109,58 +105,31 @@ export const handleGitlabPipeline = async payload => {
   if (pipeline.status === 'running') {
     const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has started running`;
 
+    const message = gitlabEmbed({ user, color: 0xE67E22, content });
+    logger('message', message);
+
     const { data } = await sendDiscordEmbedMessage({
-      embeds: [{
-        color: 0xE67E22,
-        author: {
-          name: user.user_name,
-          icon_url: user.user_avatar,
-          url: `https://gitlab.com/${user.user_username}`,
-        },
-        description: content,
-        timestamp: new Date(),
-        footer: {
-          text: 'GitLab',
-        },
-      }],
+      embeds: [message],
     });
     logger('data %O', data);
   } else if (pipeline.status === 'success') {
     const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has passed in ${new Date(pipeline.duration * 1000).toISOString().substr(14, 5)}`;
 
+    const message = gitlabEmbed({ user, color: 0x1F8B4C, content });
+    logger('message', message);
+
     const { data } = await sendDiscordEmbedMessage({
-      embeds: [{
-        color: 0x1F8B4C,
-        author: {
-          name: user.user_name,
-          icon_url: user.user_avatar,
-          url: `https://gitlab.com/${user.user_username}`,
-        },
-        description: content,
-        timestamp: new Date(),
-        footer: {
-          text: 'GitLab',
-        },
-      }],
+      embeds: [message],
     });
     logger('data %O', data);
   } else if (pipeline.status === 'failed') {
     const content = `[${project.name}](${project.web_url}): Pipeline [#${pipeline.id}](${project.web_url}/-/pipelines/${pipeline.id}) of branch [${pipeline.ref}](${project.web_url}/commits/${pipeline.ref}) by [${user.name}](https://gitlab.com/${user.username}) has failed in ${new Date(pipeline.duration * 1000).toISOString().substr(14, 5)}`;
 
+    const message = gitlabEmbed({ user, color: 0x1F8B4C, content });
+    logger('message', message);
+
     const { data } = await sendDiscordEmbedMessage({
-      embeds: [{
-        color: 0xE74C3C,
-        author: {
-          name: user.user_name,
-          icon_url: user.user_avatar,
-          url: `https://gitlab.com/${user.user_username}`,
-        },
-        description: content,
-        timestamp: new Date(),
-        footer: {
-          text: 'GitLab',
-        },
-      }],
+      embeds: [message],
     });
     logger('data %O', data);
   }
