@@ -8,7 +8,7 @@ export const gitlab = async event => {
   const { object_kind } = payload;
   logger('payload %O, kind', payload, object_kind);
 
-  if (object_kind === 'push') handleGitlabPush(payload);
+  if (object_kind === 'push') await handleGitlabPush(payload);
   else if (object_kind === 'pipeline') await handleGitlabPipeline(payload);
   else if (object_kind === 'merge_request') await handleGitlabMergeRequest(payload);
 
