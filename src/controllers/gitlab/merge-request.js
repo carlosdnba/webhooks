@@ -31,7 +31,7 @@ export const handleGitlabMergeRequest = async payload => {
     });
   }
 
-  const content = `${user.name} ${mergeRequest.action} merge request [!${mergeRequest.iid} ${mergeRequest.title}](${mergeRequest.url}) in [${project.namespace}/${project.name}](${project.web_url})`;
+  const content = `${user.name} ${mergeRequest.action || mergeRequest.state} merge request [!${mergeRequest.iid} ${mergeRequest.title}](${mergeRequest.url}) in [${project.namespace}/${project.name}](${project.web_url})`;
   const message = gitlabEmbed({ user, color: 0xE67E22, content });
   logger('message', message);
 
