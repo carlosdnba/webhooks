@@ -1,7 +1,7 @@
 import debug from 'debug';
 import { GitlabMergeRequest } from '../../models/gitlab/merge-request';
 
-const logger = debug(`${process.env.PROJECT_NAME}:controllers:gitlab:pipeline`);
+const logger = debug(`${process.env.PROJECT_NAME}:controllers:gitlab:merge-request`);
 
 export const handleGitlabMergeRequest = async payload => {
   const {
