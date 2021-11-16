@@ -1,3 +1,4 @@
+import { chunk } from 'lodash'
 import debug from 'debug';
 import { GitlabCommit } from '../../models/gitlab/commit';
 import { sendDiscordEmbedMessage } from '../../services/discord';
@@ -21,7 +22,7 @@ export const handleGitlabPush = async payload => {
 
   let content = `${user_name} pushed ${total_commits_count} new commits to branch [${branch}](${project.web_url}/-/tree/${branch}) of [${project.path_with_namespace}](${project.web_url}) ([Compare changes](${project.web_url}/-/compare/${before}...${after}))`;
 
-  for (const commit of commits) {
+  const commitsArray = commits.map(commit => {
     content += `\n\n[${commit.id.substring(0, 8)}](${commit.url}): ${commit.title}`;
 
     if (commit.added.length > 0) {
@@ -49,7 +50,7 @@ export const handleGitlabPush = async payload => {
     }
     content += `\n${new Date(commit.timestamp).toGMTString()}`;
 
-    const commitCreateResponse = await GitlabCommit.create({
+    return {
       ...commit,
       project: {
         id: project.id,
@@ -57,9 +58,14 @@ export const handleGitlabPush = async payload => {
         description: project.description,
         web_url: project.web_url,
       },
-    });
-    logger('commitCreateResponse %O', commitCreateResponse);
-  }
+    }
+    // const commitCreateResponse = await GitlabCommit.create();
+    // logger('commitCreateResponse %O', commitCreateResponse);
+  });
+  const chunks = chunk(commitsArray, 20);
+  logger('chunks.length %o', chunks.length);
+  const promises = chunks.map(chunkk => GitlabCommit.batchPut(chunkk));
+  await Promise.all(promises);
 
   const message = gitlabEmbed({
     color: 0xE67E22,
