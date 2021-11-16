@@ -10,7 +10,7 @@ after_script:
 install_dependencies:
   stage: install_dependencies
   script:
-    - yarn
+    - npm i
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
@@ -22,7 +22,7 @@ install_dependencies:
 lint:
   stage: test
   script:
-    - yarn lint .
+    - npm run lint .
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
@@ -35,7 +35,7 @@ lint:
 unit:
   stage: test
   script:
-    - yarn test:ci
+    - npm run test:ci
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
   artifacts:
     when: always
@@ -56,8 +56,8 @@ start:
   variables:
     ENVIRONMENT_NAME: develop
   script:
-    - yarn deploy:aws-config
-    - yarn deploy:run
+    - npm run deploy:aws-config
+    - npm run deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
@@ -71,8 +71,8 @@ deploy:
   variables:
     ENVIRONMENT_NAME: master
   script:
-    - yarn deploy:aws-config
-    - yarn deploy:run
+    - npm run deploy:aws-config
+    - npm run deploy:run
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
