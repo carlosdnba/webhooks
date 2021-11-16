@@ -47,6 +47,7 @@ export const handleGitlabPush = async payload => {
         else content += ` | \`${file}\``;
       });
     }
+    content += `\n${new Date(commit.timestamp).toGMTString()}`;
 
     const commitCreateResponse = await GitlabCommit.create({
       ...commit,
