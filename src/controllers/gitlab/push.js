@@ -1,5 +1,6 @@
-import { chunk } from 'lodash'
+import { chunk } from 'lodash';
 import debug from 'debug';
+import moment from 'moment';
 import { GitlabCommit } from '../../models/gitlab/commit';
 import { sendDiscordEmbedMessage } from '../../services/discord';
 import { gitlabEmbed } from '../../views/discord-embed';
@@ -48,7 +49,7 @@ export const handleGitlabPush = async payload => {
         else content += ` | \`${file}\``;
       });
     }
-    content += `\n${new Date(commit.timestamp).toGMTString()}`;
+    content += `\n__${moment(commit.timestamp).format('HH:mm DD/MM/YYYY')}__`;
 
     return {
       ...commit,
@@ -58,9 +59,7 @@ export const handleGitlabPush = async payload => {
         description: project.description,
         web_url: project.web_url,
       },
-    }
-    // const commitCreateResponse = await GitlabCommit.create();
-    // logger('commitCreateResponse %O', commitCreateResponse);
+    };
   });
   const chunks = chunk(commitsArray, 20);
   logger('chunks.length %o', chunks.length);
