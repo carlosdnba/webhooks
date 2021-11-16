@@ -45,3 +45,6 @@ functions:
       - http:
           path: webhook/github
           method: post
+  normalize-git-table:
+    handler: src/handlers/chore.normalizeGitTable
+  
