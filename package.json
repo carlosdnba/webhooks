@@ -4,8 +4,8 @@
   "author": "Carlos Daniel",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently yarn:startup:*",
-    "startup:server": "sls offline",
+    "start": "concurrently npm:startup:*",
+    "startup:server": "./node_modules/.bin/serverless offline",
     "startup:dynalite": "./node_modules/.bin/dynalite --createTableMs=0 --deleteTableMs=0 --updateTableMs=0 --port=8000",
     "startup:dynamodb-admin": "dynamodb-admin",
     "deploy:run": "./node_modules/.bin/serverless deploy",
@@ -21,6 +21,7 @@
     "debug": "^4.3.2",
     "dynamoose": "^2.7.3",
     "jest-junit": "^12.2.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "serverless": "^2.53.1"
   },
