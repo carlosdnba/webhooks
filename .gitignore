@@ -55,3 +55,7 @@ env.yml
 # IDE
 .idea
 .vscode
+
+# sst build output
+.build
+.sst
