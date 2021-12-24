@@ -37,6 +37,21 @@ unit:
     - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
+stop:
+  stage: deploy
+  needs: []
+  allow_failure: true
+  script:
+    - npm run remove -- --stage=$CI_COMMIT_REF_SLUG
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
+  except:
+    - master
+
 deploy:dev:
   stage: deploy
   script:
