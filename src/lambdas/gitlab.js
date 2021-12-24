@@ -1,18 +1,20 @@
-import debug from 'debug';
-import { handleGitlabPush, handleGitlabPipeline, handleGitlabMergeRequest } from '../controllers/gitlab';
+import debug from 'debug'
+import {
+  handleGitlabPush,
+  handleGitlabPipeline
+} from '../controllers/gitlab'
 
-const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`);
+const logger = debug(`${process.env.PROJECT_NAME}:handlers:gitlab`)
 
 export const gitlab = async event => {
-  const payload = JSON.parse(event.body);
-  const { object_kind } = payload;
-  logger('payload %O, kind', payload, object_kind);
+  const payload = JSON.parse(event.body)
+  const { object_kind } = payload
+  logger('payload %j kind %o', payload, object_kind)
 
-  if (object_kind === 'push') await handleGitlabPush(payload);
-  else if (object_kind === 'pipeline') await handleGitlabPipeline(payload);
-  else if (object_kind === 'merge_request') await handleGitlabMergeRequest(payload);
+  if (object_kind === 'push') await handleGitlabPush(payload)
+  else if (object_kind === 'pipeline') await handleGitlabPipeline(payload)
 
   return {
-    statusCode: 200,
-  };
-};
+    statusCode: 200
+  }
+}
