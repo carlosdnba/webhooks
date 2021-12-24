@@ -23,15 +23,16 @@ export default class StackTop extends Stack {
       defaultFunctionProps: {
         // Pass in the table name to our API
         environment: {
-          tableName: table.tableName,
-          projectName: process.env.PROJECT_NAME,
-          environmentName: process.env.ENVIRONMENT_NAME,
+          TABLE_NAME: table.tableName,
+          PROJECT_NAME: process.env.PROJECT_NAME,
+          ENVIRONMENT_NAME: process.env.ENVIRONMENT_NAME,
+          DISCORD_WEBHOOK: process.env.DISCORD_WEBHOOK,
           DEBUG: `${process.env.PROJECT_NAME}:*`
         }
       },
       routes: {
-        'GET /health-check': 'src/handlers/index.healthCheck',
-        'POST /webhook/gitlab': 'src/handlers/index.gitlab',
+        'GET /health-check': 'src/lambdas/index.healthCheck',
+        'POST /webhook/gitlab': 'src/lambdas/index.gitlab',
         'POST /webhook/github': 'src/lambdas/index.github'
       }
     })
