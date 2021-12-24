@@ -32,8 +32,7 @@ export default class StackTop extends Stack {
       },
       routes: {
         'GET /health-check': 'src/lambdas/index.healthCheck',
-        'POST /webhook/gitlab': 'src/lambdas/index.gitlab',
-        'POST /webhook/github': 'src/lambdas/index.github'
+        'POST /webhook/gitlab': 'src/lambdas/index.gitlab'
       }
     })
 
