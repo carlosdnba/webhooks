@@ -4,12 +4,10 @@
   "author": "Carlos Daniel",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently npm:startup:*",
-    "startup:server": "./node_modules/.bin/serverless offline",
-    "startup:dynalite": "./node_modules/.bin/dynalite --createTableMs=0 --deleteTableMs=0 --updateTableMs=0 --port=8000",
-    "startup:dynamodb-admin": "dynamodb-admin",
-    "deploy:run": "./node_modules/.bin/serverless deploy",
-    "deploy:aws-config": "./node_modules/.bin/serverless config credentials -p aws -k $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY",
+    "start": "sst start",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
     "test": "./node_modules/.bin/jest --detectOpenHandles --forceExit --logHeapUsage",
     "test:coverage": "./node_modules/.bin/jest --coverage",
     "test:ci": "./node_modules/.bin/jest --ci --reporters=default --reporters=jest-junit --coverage --bail",
@@ -17,32 +15,22 @@
     "lint": "./node_modules/.bin/eslint --fix"
   },
   "dependencies": {
+    "@serverless-stack/cli": "0.48.0",
+    "@serverless-stack/resources": "0.48.0",
     "axios": "^0.20.0",
     "debug": "^4.3.2",
     "dynamoose": "^2.7.3",
-    "jest-junit": "^12.2.0",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
-    "serverless": "^2.53.1"
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.2",
     "babel-plugin-rewire": "^1.2.0",
     "babel-preset-latest-node": "^5.5.1",
-    "concurrently": "^6.2.0",
-    "dynalite": "^3.2.1",
-    "dynamodb-admin": "^4.0.3",
-    "eslint": "^7.17.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.4.0",
-    "eslint-plugin-prettier": "^3.3.1",
     "jest": "^27.0.6",
-    "serverless-bundle": "3.2.0",
-    "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^8.0.0"
+    "jest-junit": "^12.2.0",
+    "standard": "^16.0.4"
   }
 }

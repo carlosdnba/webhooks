@@ -1,9 +1,7 @@
 image: registry.gitlab.com/dev_squad/ci-base-image:latest
 stages:
   - install_dependencies
-  - test
   - deploy
-
 after_script:
   - echo ${CI_JOB_STAGE}:${CI_JOB_NAME} > LAST_JOB
   
@@ -19,60 +17,35 @@ install_dependencies:
     - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
-lint:
-  stage: test
+stop:
+  stage: deploy
+  allow_failure: true
   script:
-    - npm run lint .
+    - npm i
+    - npm run remove -- --stage=$CI_COMMIT_REF_SLUG
+  when: manual
+  except:
+    - master
+
+deploy:dev:
+  stage: deploy
+  script:
+    - npm run deploy -- --stage=$CI_COMMIT_REF_SLUG
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull
     paths:
       - node_modules
-  rules:
-    - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  except:
+    - master
 
-unit:
-  stage: test
-  script:
-    - npm run test:ci
-  coverage: /All\sfiles.*?\s+(\d+.\d+)/
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - junit.xml
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    policy: pull
-    paths:
-      - node_modules
-  rules:
-    - if: "$CI_COMMIT_TAG || $CI_COMMIT_BRANCH"
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-
-start:
+deploy:live:
   stage: deploy
   variables:
-    ENVIRONMENT_NAME: develop
+    STAGE: live
+    ENVIRONMENT_NAME: live
   script:
-    - npm run deploy:aws-config
-    - npm run deploy:run
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    policy: pull
-    paths:
-      - node_modules
-  only:
-    - develop
-
-deploy:
-  stage: deploy
-  variables:
-    ENVIRONMENT_NAME: master
-  script:
-    - npm run deploy:aws-config
-    - npm run deploy:run
+      - npm run deploy -- --stage=$CI_COMMIT_REF_SLUG
   cache:
     key: $CI_COMMIT_REF_SLUG
     policy: pull

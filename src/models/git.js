@@ -1,39 +1,31 @@
-import dynamoose from 'dynamoose';
+import dynamoose from 'dynamoose'
 
-if (process.env.ENVIRONMENT_NAME === 'local') {
-  dynamoose.aws.ddb.local();
-}
-
-const tableSchema = new dynamoose.Schema(
+export const schema = new dynamoose.Schema(
   {
     pk: {
       type: String,
-      hashKey: true,
+      hashKey: true
     },
     sk: {
       type: String,
-      rangeKey: true,
-    },
+      rangeKey: true
+    }
   },
   {
     timestamps: true,
-    saveUnknown: true,
-  },
-);
+    saveUnknown: true
+  }
+)
 
-export const Git = dynamoose.model(
-  'gitlab',
-  tableSchema,
+export const Model = dynamoose.model(process.env.TABLE_NAME, schema,
   {
-    throughput: 'ON_DEMAND',
-    prefix: `${process.env.PROJECT_NAME}.`,
-    suffix: `.${process.env.ENVIRONMENT_NAME}`,
-  },
-);
+    throughput: 'ON_DEMAND'
+  }
+)
 
 export const keys = {
   commit: 'commit',
   mergeRequest: 'merge-request',
   pipeline: 'pipeline',
-  build: 'build',
-};
+  build: 'build'
+}
