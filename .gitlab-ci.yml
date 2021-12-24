@@ -19,16 +19,10 @@ install_dependencies:
 
 stop:
   stage: deploy
-  needs: []
   allow_failure: true
   script:
     - npm i
     - npm run remove -- --stage=$CI_COMMIT_REF_SLUG
-  variables:
-    GIT_STRATEGY: none
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    action: stop
   when: manual
   except:
     - master
