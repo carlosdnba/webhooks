@@ -25,7 +25,6 @@ export default class StackTop extends Stack {
         environment: {
           TABLE_NAME: table.tableName,
           PROJECT_NAME: process.env.PROJECT_NAME,
-          ENVIRONMENT_NAME: process.env.ENVIRONMENT_NAME,
           DISCORD_WEBHOOK: process.env.DISCORD_WEBHOOK,
           DEBUG: `${process.env.PROJECT_NAME}:*`
         }
