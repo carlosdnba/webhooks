@@ -15,8 +15,8 @@
     "lint": "./node_modules/.bin/eslint --fix"
   },
   "dependencies": {
-    "@serverless-stack/cli": "0.48.0",
-    "@serverless-stack/resources": "0.48.0",
+    "@serverless-stack/cli": "0.54.4",
+    "@serverless-stack/resources": "0.54.4",
     "axios": "^0.20.0",
     "debug": "^4.3.2",
     "dynamoose": "^2.7.3",
