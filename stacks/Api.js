@@ -13,8 +13,8 @@ export default class Api extends sst.Stack {
         }
       },
       routes: {
-        'GET /health-check': 'src/lambdas/index.healthCheck',
-        'POST /webhook/gitlab': 'src/lambdas/index.gitlab'
+        'GET /health-check': 'src/lambdas/health-check.healthCheck',
+        'POST /webhook/gitlab': 'src/lambdas/gitlab.main'
       }
     })
 

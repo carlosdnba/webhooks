@@ -11,7 +11,7 @@ export default class Bus extends sst.Stack {
         eventPattern: { detailType: ['GitLab code was committed'] },
         targets: [{
           function: {
-            handler: 'src/lambdas/gitlab.commit',
+            handler: 'src/lambdas/commit.main',
             environment: {
               TABLE_NAME: props.table.tableName,
               EVENT_BUS_NAME: this.bus.eventBusName

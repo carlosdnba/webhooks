@@ -1,4 +1,5 @@
-// import * as sst from '@serverless-stack/resources'
+import * as sst from '@serverless-stack/resources'
+import path from 'path'
 
 import StorageStack from './Storage'
 import BusStack from './Bus'
@@ -7,7 +8,10 @@ import ApiStack from './Api'
 export default app => {
   app.setDefaultFunctionProps({
     timeout: 10,
-    runtime: 'nodejs12.x'
+    runtime: 'nodejs12.x',
+    functionName: ({ functionProps, stack }) => (
+      `${stack.stackName}-${path.parse(functionProps.handler).name}`
+    )
   })
   app.addDefaultFunctionEnv({
     STAGE: app.stage,
