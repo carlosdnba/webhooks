@@ -29,6 +29,8 @@ stop:
 
 deploy:dev:
   stage: deploy
+  variables:
+    STAGE: $CI_COMMIT_REF_SLUG
   script:
     - npm run deploy -- --stage=$CI_COMMIT_REF_SLUG
   cache:
