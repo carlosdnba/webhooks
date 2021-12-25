@@ -9,13 +9,8 @@ export default class Api extends sst.Stack {
       defaultFunctionProps: {
         environment: {
           TABLE_NAME: props.table.tableName,
-          EVENT_BUS_NAME: props.bus.eventBusName,
-          PROJECT_NAME: process.env.PROJECT_NAME,
-          DISCORD_WEBHOOK: process.env.DISCORD_WEBHOOK,
-          STAGE: process.env.STAGE,
-          DEBUG: `${process.env.PROJECT_NAME}:*`
-        },
-        permissions: [props.table, 'events']
+          EVENT_BUS_NAME: props.bus.eventBusName
+        }
       },
       routes: {
         'GET /health-check': 'src/lambdas/index.healthCheck',
