@@ -1,5 +1,12 @@
-import Stack from './Stack'
+import Table from './Table'
+import Bus from './Bus'
+import Api from './Api'
 
 export default function main (app) {
-  new Stack(app, 'stack')
+  const table = new Table(app, 'table')
+  const bus = new Bus(app, 'bus', { table: table.table })
+  const api = new Api(app, 'api', {
+    table: table.table,
+    bus: bus.bus
+  })
 }
