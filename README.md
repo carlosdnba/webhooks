@@ -8,7 +8,7 @@ Also, I want to get the commits and information from those webhooks and send it 
 
 ## Installation
 
-This project is running under the [Serverless Stack](https://www.serverless-stack.com/) framework (❤️) with it's amazing live Lambda development. It means you don't need to bother about setting up anything like DynamoDB or NGROK in your local environment. It's everything running under AWS :D.
+This project is running under the [Serverless Stack](https://www.serverless-stack.com/) framework (❤️) with its amazing live Lambda development. It means you don't need to bother about setting up anything like DynamoDB or NGROK in your local environment. It's everything running under AWS :D.
 
 To run it, you need an AWS account though. After cloning the repo, you can:
 
@@ -24,4 +24,4 @@ npm run start
 # do the following steps according to Serverless Stack
 ```
 
-Obs. You need to setup the variables at the `.env` file you've created - specially the `DISCORD_WEBHOOK` variable.
+Obs. You need to setup the variables at the `.env` file you've created - especially the `DISCORD_WEBHOOK` variable.
