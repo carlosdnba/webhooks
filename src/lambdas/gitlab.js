@@ -36,10 +36,12 @@ export const main = async event => {
       merge_request: payload.merge_request
     }).save()
 
-    const message = buildPipelineMessage(payload)
-    await sendDiscordEmbedMessage({
-      embeds: [message]
-    })
+    if (['running', 'success', 'failed'].includes(pipeline.status)) {
+      const message = buildPipelineMessage(payload)
+      await sendDiscordEmbedMessage({
+        embeds: [message]
+      })
+    }
   }
 
   return {
