@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { gitlabEmbed } from '../views/discord-embed'
 
 export const buildCommitMessage = payload => {
@@ -39,7 +38,6 @@ export const buildCommitMessage = payload => {
         else content += ` | \`${file}\``
       })
     }
-    content += `\n__${moment(commit.timestamp).format('HH:mm DD/MM/YYYY')}__`
   }
 
   const message = gitlabEmbed({
