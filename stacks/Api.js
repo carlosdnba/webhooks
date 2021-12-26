@@ -8,8 +8,7 @@ export default class Api extends sst.Stack {
     const api = new sst.Api(this, 'http', {
       defaultFunctionProps: {
         environment: {
-          TABLE_NAME: props.table.tableName,
-          EVENT_BUS_NAME: props.bus.eventBusName
+          TABLE_NAME: props.table.tableName
         }
       },
       routes: {

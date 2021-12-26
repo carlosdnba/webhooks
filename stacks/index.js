@@ -2,7 +2,6 @@ import * as sst from '@serverless-stack/resources'
 import path from 'path'
 
 import StorageStack from './Storage'
-import BusStack from './Bus'
 import ApiStack from './Api'
 
 export default app => {
@@ -25,10 +24,8 @@ export default app => {
   // Adding permission for all stacks to access the storage
   app.addDefaultFunctionPermissions(['events', storage.table])
 
-  const bus = new BusStack(app, 'bus', { table: storage.table })
   const api = new ApiStack(app, 'api', {
-    table: storage.table,
-    bus: bus.bus
+    table: storage.table
   })
 
   // Add more stacks
