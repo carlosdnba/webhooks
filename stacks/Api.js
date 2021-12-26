@@ -17,6 +17,15 @@ export default class Api extends sst.Stack {
       }
     })
 
+    const fun = new sst.Function(this, 'copy-ddb-items', {
+      handler: 'src/lambdas/copy-table.main',
+      timeout: 30,
+      environment: {
+        TABLE_NAME: props.table.tableName
+      },
+      permissions: ['dynamodb:*']
+    })
+
     // Show the URLs in the output
     this.addOutputs({
       ApiEndpoint: api.url
